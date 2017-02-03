@@ -81,7 +81,11 @@ class Namespace:
         return value.replace('\\n', '\n')
 
     def __contains__(self, key):
-        return self[key] != None
+        try:
+            self.__getattr__(key)
+            return True
+        except KeyError:
+            return False
 
     def __dir__(self):
         resources = self.__root__.get_full_property(RESOURCE_MANAGER, STRING)
